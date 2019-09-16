@@ -1,16 +1,16 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: redis
+  name: gitlab-redis
   namespace: devops
   labels:
-    name: redis
+    name: gitlab-redis
 spec:
   template:
     metadata:
-      name: redis
+      name: gitlib-redis
       labels:
-        name: redis
+        name: gitlab-redis
     spec:
       containers:
       - name: redis
@@ -38,21 +38,22 @@ spec:
           timeoutSeconds: 1
       volumes:
       - name: data
-        emptyDir: {}
+        hostPath:
+          path: /var/www/webapps/gitlab/redis
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis
+  name: gitlab-redis
   namespace: devops
   labels:
-    name: redis
+    name: gitlab-redis
 spec:
   ports:
     - name: redis
       port: 6379
       targetPort: redis
   selector:
-    name: redis
+    name: gitlab-redis
 

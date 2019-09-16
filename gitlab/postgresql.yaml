@@ -1,16 +1,16 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: postgresql
+  name: gitlab-postgresql
   namespace: devops
   labels:
-    name: postgresql
+    name: gitlab-postgresql
 spec:
   template:
     metadata:
-      name: postgresql
+      name: gitlab-postgresql
       labels:
-        name: postgresql
+        name: gitlab-postgresql
     spec:
       containers:
       - name: postgresql
@@ -53,21 +53,22 @@ spec:
           timeoutSeconds: 1
       volumes:
       - name: data
-        emptyDir: {}
+        hostPath:
+          path: /var/www/webapps/gitlab/postgresql
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgresql
+  name: gitlab-postgresql
   namespace: devops
   labels:
-    name: postgresql
+    name: gitlab-postgresql
 spec:
   ports:
     - name: postgres
       port: 5432
       targetPort: postgres
   selector:
-    name: postgresql
+    name: gitlab-postgresql
 

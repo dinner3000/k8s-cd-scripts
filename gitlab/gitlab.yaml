@@ -48,7 +48,7 @@ spec:
         - name: DB_TYPE
           value: postgres
         - name: DB_HOST
-          value: postgresql
+          value: gitlab-postgresql
         - name: DB_PORT
           value: "5432"
         - name: DB_USER
@@ -58,7 +58,7 @@ spec:
         - name: DB_NAME
           value: gitlab
         - name: REDIS_HOST
-          value: redis
+          value: gitlab-redis
         - name: REDIS_PORT
           value: "6379"
         ports:
@@ -83,8 +83,8 @@ spec:
           timeoutSeconds: 1
       volumes:
       - name: data
-        emptyDir: {}
-
+        hostPath:
+          path: /var/www/webapps/gitlab/git
 ---
 apiVersion: v1
 kind: Service
