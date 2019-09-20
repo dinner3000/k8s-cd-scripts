@@ -32,7 +32,7 @@ spec:
         - name: GITLAB_ROOT_EMAIL
           value: admin@gitlab.k8s
         - name: GITLAB_HOST
-          value: gitlab.k8s
+          value: 172.16.52.129:30888
         - name: GITLAB_PORT
           value: "80"
         - name: GITLAB_SSH_PORT
@@ -97,10 +97,12 @@ spec:
   ports:
     - name: http
       port: 80
+      nodePort: 30888
       targetPort: http
     - name: ssh
       port: 22
       targetPort: ssh
+  type: NodePort
   selector:
     name: gitlab
 
